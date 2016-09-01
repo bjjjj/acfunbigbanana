@@ -12,25 +12,31 @@
 // ==/UserScript==
 
 (function () {
+    function throw_banana(){
+        console.log("腳本運行開始( ・_ゝ・)！~");
+        $.post("/banana/throwBanana.aspx", {
+            contentId: $("#block-data-view").attr("data-aid"),
+            count: '5',
+            userId: user.uid
+        }).done(function (t) {
+            var r;
+            t.success ? r = "success::成功投食了5根香蕉。" : r = "warning::投食操作失败";
+            $.info(r);
+            $$("#btn-banana-toolbar").addClass("active").find("p").text("已投食");
+            console.log("腳本運行成功(ノﾟ∀ﾟ)ノ！~");
+        });
+        console.log("腳本運行結束(`ヮ´ )！~");
+    }
+    
     function test_test() {
         if (user.uid == -1) {
             setTimeout(function () {
-                test_test()
+                test_test();
             }, 100);
+        } else if (user.uid == 0){
+            $.info("你忘記登陸了嗎?");
         } else {
-            console.log("腳本運行開始( ・_ゝ・)！~");
-            $.post("/banana/throwBanana.aspx", {
-                contentId: $("#block-data-view").attr("data-aid"),
-                count: '5',
-                userId: user.uid
-            }).done(function (t) {
-                var r;
-                t.success ? r = "success::成功投食了5根香蕉。" : r = "warning::投食操作失败";
-                $.info(r);
-                console.log("腳本運行成功(ノﾟ∀ﾟ)ノ！~");
-                $$("#btn-banana-toolbar").addClass("active").find("p").text("已投食");
-            });
-            console.log("腳本運行結束(`ヮ´ )！~");
+            throw_banana();
         }
     }
 
