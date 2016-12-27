@@ -40,7 +40,12 @@
         }
     }
 
+    int i = 0;
     function chk_sys() {
+        if(i > 600){ // 1 分鐘 * 60 * 1000ms / (100ms/次)
+            $.info("腳本運行超時!已停運腳本!");
+            return;
+        }
         if (system.post != undefined) {
             if (system.post.isUped != undefined && system.post.isThrowed != undefined) {
                 if (system.post.isThrowed == 1) {
@@ -62,6 +67,7 @@
                 chk_sys();
             }, 100);
         }
+        i++;
     }
     chk_sys();
 }());
